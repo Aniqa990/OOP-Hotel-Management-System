@@ -7,11 +7,10 @@
 #include <iomanip>
 #include<fstream>
 
-
+using namespace std;
 
 class Exception;
 class Customer;
-using namespace std;
 class RoomCustomer;
 class Employee;
 class Dish;
@@ -273,8 +272,173 @@ public:
 
 };
 
+class RestaurantCustomer : public Customer {
+public:
+	double rbill;
+
+	
+	void view_bill(string items[], int num) {}
+	void print_itemlist(string items[], int num){}
+};
+
+class Employee {
+	int employeeid;
+	string name;
+
+public:
+	static int noofemployees;
+
+	Employee(){}
+
+	virtual void perform_duty() = 0;
+	virtual ~Employee() {
+	}
+};
+
+int Employee::noofemployees = 0;
+
+class Administrator : public Employee {
+
+public:
+
+	void addRoom() {}
+	void removeRoom() {}
+	void addEmployee(){}
+	void removeEmployee(){}
+	void perform_duty() {
+		//all above functions in switch case
+	}
+
+};
+
+class RoomService : public Employee {
+
+public:
+
+	void perform_duty(){}
+};
+class SelectEmployee {
+	//protected:
+	Employee* e;
+
+
+public:
+	SelectEmployee(Employee* e1)
+	{
+		e = e1;
+	}
+
+	void performDuty()
+	{
+		e->perform_duty();
+	}
+
+};
+
+
+class Restaurant {
+
+public:
+	//Dish* dishes = new Dish[noofdishes];
+
+	void addDishes(){}
+	void displayMenu(){}
+
+};
+
+class Bill { //composition with customer
+	int bill_id;
+
+public:
+	void print_bill() {
+		//get customer, dish, and room details
+		//add objects of order and roombooking
+	 }
+};
+
+class Hotel {
+	string hotelName;
+	string hotelAddress;
+
+public:
+	Hotel(string hname, string add)
+	{
+		this->hotelName = hname;
+		this->hotelAddress = add;
+	}
+
+	void display_allrooms(){}
+	void displayMenu()
+	{
+		cout << "\n\n-----------------------------------------------Menu-------------------------------------------------\n\n ";
+		int i;
+		const int width = 8;
+		cout << setw(25) << " Dish Name" << setw(25) << "Price" << setw(25) << "Dish Type" << endl;
+		for (i = 0; i < 8; i++)
+		{
+
+			cout << setw(25) << restuarant.dish[i].dishName;
+			cout << setw(25) << restuarant.dish[i].price;
+			cout << setw(25) << restuarant.dish[i].dishType << "\n";
+		}
+		cout << "\n\n";
+	}
+
+	void bookRoom(int r)
+	{
+		int i;
+		for (i = 0; i < 6; i++)
+		{
+			if (room[i].roomNo == r)
+				room[i].status = 1;
+		}
+	}
+
+
+	void getCustomerData(Customer* c)
+	{
+		cout << " Name :: " << c->custName << endl;
+		cout << " Address :: " << c->custAddress << endl;
+		cout << " Phone :: " << c->custPhone << endl;
+		cout << " Email :: " << c->custEmail << endl;
+		cout << " Check-In Time:: " << c->checkInTime << endl;
+	}
+
+	void vacateRoom(int rno)
+	{
+		int i, j = 0;
+		for (i = 0; i < 6; i++)
+		{
+
+			if (room[i].roomNo == rno)
+			{
+				j = 1;
+				room[i].status = 0;
+				cout << "Thank You! Visit Again.\n" << endl;
+			}
+		}
+		if (j == 0)
+			throw Exception(8, "Sorry! Room Not Found, or occupied at the moment\n");
+
+	}
+	void takeOrder(string dnm)
+	{
+		int i, j = 0;;
+		for (i = 0; i < 8; i++)
+		{
+			if (restuarant.dish[i].dishName == dnm)
+			{
+				j = 1;
+				cout << "Order Successful\n" << endl;
+			}
+		}
+		if (j == 0)
+			throw Exception(9, "Sorry! Dish Not Found, Enter a valid entry");
+	}
+};
+
 int main()
 {
-    
+   
 }
 
