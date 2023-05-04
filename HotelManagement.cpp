@@ -147,6 +147,8 @@ public:
 
 	}
 };
+int  Dish::noOfdishes = 0;
+
 
 class Customer
 {
@@ -224,7 +226,7 @@ public:
 	virtual void checkout() {
 	}
 };
-
+int Customer::noOcustomers = 0;
 class RoomCustomer : public Customer
 {
 public:
@@ -272,14 +274,58 @@ public:
 
 };
 
-class RestaurantCustomer : public Customer {
+class RestaurantCustomer :public Customer
+{
 public:
-	double rbill;
+	static double dbill;
+	vector<string> dishes;
+public:
+	//order dish
+	void Order_dish(string a)
+	{
+		dishes.push_back( a);
 
-	
-	void view_bill(string items[], int num) {}
-	void print_itemlist(string items[], int num){}
+	}
+
+	//items that has bought by customer
+	void prin_itemlist(vector<Dish> d)
+	{
+		cout << "Dishes that Customer has ordered!\n";
+		cout << "dish\tPrice\n";
+		for (int i = 0; i < d.size(); i++)
+		{
+			if (d[i].dishName == dishes[i])
+			{
+				cout << 1 + i << ". " << d[i].dishName << "\t" << d[i].price << endl;
+			}
+		}
+	}
+	void view_bill(vector<Dish> d3)
+	{
+		for (int i = 0; i < d3.size(); i++)
+		{
+			if (d3[i].dishName == dishes[i])
+			{
+				dbill += d3[i].price;
+
+			}
+		}
+		cout << "Bill = " << dbill;
+	}
+
+	RestaurantCustomer() {}
+
+	RestaurantCustomer(double a)
+	{
+		dbill = a;
+	}
+
+
 };
+
+double RestaurantCustomer::dbill = 0;
+
+
 
 class Employee {
 	int employeeid;
