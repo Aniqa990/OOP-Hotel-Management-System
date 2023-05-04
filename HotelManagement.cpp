@@ -483,6 +483,66 @@ public:
 	}
 };
 
+
+
+class Restaurant
+{
+public:
+	Dish dish[8];
+
+public:
+	void addDishes()
+	{
+		ofstream menu;
+		menu.open("Menu.txt", ios::ate);
+		int i;
+		for (i = 0; i < 8; i++)
+		{
+			cout << i + 1 << "] Enter Dish Name Price and Type\n";
+			cin >> dish[i].dishName >> dish[i].price >> dish[i].dishType;
+			menu << dish[i].dishName << "\t" << dish[i].price << "\t" << dish[i].dishType << "\n";
+		}
+		menu.close();
+	}
+
+	// I make it extra 
+	Dish getDish(string dnam)
+	{
+		int i;
+		for (i = 0; i < 8; i++)
+		{
+
+			if (dish[i].dishName == dnam)
+
+			{
+				return dish[i];
+			}
+		}
+	}
+
+
+
+	void displayDish(Dish d)
+	{
+		cout << " Dish Name :: " << d.dishName << endl;
+		cout << " Price :: " << d.price << endl;
+		cout << " Dish Type :: " << d.dishType;
+
+	}
+
+	void displayMenu()
+	{
+		int i;
+		for (i = 0; i < 8; i++)
+		{
+			displayDish(dish[i]);
+		}
+
+	}
+
+};
+
+
 int main()
 {
    
