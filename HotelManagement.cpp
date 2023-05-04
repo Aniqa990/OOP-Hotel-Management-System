@@ -2,6 +2,7 @@
 #include <iostream>
 #include<string.h>
 #include<stdlib.h>
+#include<vector>
 #include<ctime>
 #include<stdbool.h>
 #include <iomanip>
@@ -118,6 +119,8 @@ public:
 		}
 	}
 
+	friend class Administrator;
+
 };
 
 class Dish
@@ -126,7 +129,7 @@ public:
 	string dishName;
 	double price;
 	string dishType;
-	int noOfdishes;
+	static int noOfdishes;
 
 public:
 	Dish(string dishName, double price, string dishType)
@@ -278,17 +281,17 @@ class RestaurantCustomer :public Customer
 {
 public:
 	static double dbill;
-	vector<string> dishes;
+	vector <string> dishes;
 public:
 	//order dish
 	void Order_dish(string a)
 	{
-		dishes.push_back( a);
+		dishes.push_back(a);
 
 	}
 
 	//items that has bought by customer
-	void prin_itemlist(vector<Dish> d)
+	void print_itemlist(vector <Dish> d)
 	{
 		cout << "Dishes that Customer has ordered!\n";
 		cout << "dish\tPrice\n";
@@ -334,7 +337,7 @@ class Employee {
 public:
 	static int noofemployees;
 
-	Employee(){}
+	Employee() {}
 
 	virtual void perform_duty() = 0;
 	virtual ~Employee() {
@@ -346,13 +349,52 @@ int Employee::noofemployees = 0;
 class Administrator : public Employee {
 
 public:
+	
+	void addRoom() {
+		string roomType;
+		int noOfBeds, roomNo;
+		double rent;
 
-	void addRoom() {}
-	void removeRoom() {}
-	void addEmployee(){}
-	void removeEmployee(){}
+		cout << "Enter Room Type, No of beds, Rent, RoomNo\n";
+		cin >> roomType;
+		cin >> noOfBeds;
+		cin >> rent;
+		cin >> roomNo;
+
+		Room r(roomType, noOfBeds, rent, roomNo);
+
+		ofstream file("Rooms.bin", ios::app | ios::binary);
+		file.write((char*)&r, sizeof(Room));
+		file.close();
+	}
+
+
+	void removeRoom() {
+	
+	}
+	void addEmployee() {}
+	void removeEmployee() {}
 	void perform_duty() {
-		//all above functions in switch case
+		int choice;
+		cout << "Enter the appropriate number to execute a function of your choice: " << endl << "1. Add Room" << endl << "2. Remove Room" << endl << "3. Add Employee" << endl << "4. Remove Employee" << endl;
+		cin >> choice;
+		switch (choice) {
+		case 1:
+			addRoom();
+			break;
+
+		case 2:
+			removeRoom();
+			break;
+
+		case 3:
+			addEmployee();
+			break;
+
+		case 4:
+			removeEmployee();
+			break;
+		}
 	}
 
 };
@@ -361,7 +403,7 @@ class RoomService : public Employee {
 
 public:
 
-	void perform_duty(){}
+	void perform_duty() {}
 };
 class SelectEmployee {
 	//protected:
@@ -388,12 +430,13 @@ public:
 	void print_bill() {
 		//get customer, dish, and room details
 		//add objects of order and roombooking
-	 }
+	}
 };
 
 class Hotel {
 	string hotelName;
 	string hotelAddress;
+	Restaurant restaurant;
 
 public:
 	Hotel(string hname, string add)
@@ -402,7 +445,7 @@ public:
 		this->hotelAddress = add;
 	}
 
-	void display_allrooms(){}
+	void display_allrooms() {}
 	void displayMenu()
 	{
 		cout << "\n\n-----------------------------------------------Menu-------------------------------------------------\n\n ";
@@ -412,9 +455,9 @@ public:
 		for (i = 0; i < 8; i++)
 		{
 
-			cout << setw(25) << restuarant.dish[i].dishName;
-			cout << setw(25) << restuarant.dish[i].price;
-			cout << setw(25) << restuarant.dish[i].dishType << "\n";
+			cout << setw(25) << restaurant.dish[i].dishName;
+			cout << setw(25) << restaurant.dish[i].price;
+			cout << setw(25) << restaurant.dish[i].dishType << "\n";
 		}
 		cout << "\n\n";
 	}
@@ -461,7 +504,7 @@ public:
 		int i, j = 0;;
 		for (i = 0; i < 8; i++)
 		{
-			if (restuarant.dish[i].dishName == dnm)
+			if (restaurant.dish[i].dishName == dnm)
 			{
 				j = 1;
 				cout << "Order Successful\n" << endl;
@@ -534,6 +577,7 @@ public:
 
 int main()
 {
-   
+
 }
+
 
