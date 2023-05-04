@@ -381,17 +381,6 @@ public:
 
 };
 
-
-class Restaurant {
-
-public:
-	//Dish* dishes = new Dish[noofdishes];
-
-	void addDishes(){}
-	void displayMenu(){}
-
-};
-
 class Bill { //composition with customer
 	int bill_id;
 
