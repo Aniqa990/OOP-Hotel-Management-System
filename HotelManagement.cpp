@@ -385,29 +385,92 @@ public:
 
 
 
-
-class Bill { //composition with customer
+class Bill {
 	int bill_id;
 
 public:
-	void print_bill() {
-		//get customer, dish, and room details
-		//add objects of order and roombooking
-	 }
+
+
+
+	Bill(){}
+
+	void print_bill()
+	{
+		
+
+    }
 };
 
-class Hotel {
+class Hotel
+{
+private:
+	static Hotel* instanceHotel;
 	string hotelName;
 	string hotelAddress;
-
 public:
+	Employee* employee[5];
+	Restaurant restuarant;
+
+	Room room[6];
+	Customer* customer[5];
+	Bill bill;
+private:
+
+
 	Hotel(string hname, string add)
 	{
 		this->hotelName = hname;
 		this->hotelAddress = add;
 	}
+public:
+	static Hotel* getHotel()
+	{
+		if (!instanceHotel)
+			instanceHotel = new Hotel("RENNAISSANCE", "HUBLI");
+		return instanceHotel;
+	}
 
-	void display_allrooms(){}
+	void setHotel(Restaurant r, Room rs[6])
+	{
+		int i;
+
+		for (i = 0; i < 6; i++)
+		{
+			this->room[i] = rs[i];
+		}
+		for (i = 0; i < 8; i++)
+			this->restuarant.dish[i] = r.dish[i];
+
+	}
+	
+	//extra
+	Room getRoom(int rno)
+	{
+		int i;
+		for (i = 0; i < 6; i++)
+		{
+			if (room[i].roomNo == rno)
+				return room[i];
+		}
+	}
+	void display_allrooms()
+	{
+		int i;
+		cout << "\n\n----------------------------------------------Room Details----------------------------------------------\n\n";
+		cout << setw(25) << "Room Type" << setw(25) << "Number of Beds" << setw(25) << "Rent" << setw(25) << "Room Number\n";
+		for (i = 0; i < 6; i++)
+		{
+			if (room[i].status == 0)
+			{
+				cout << setw(25) << room[i].roomType;
+				cout << setw(25) << room[i].noOfBeds;
+				cout << setw(25) << room[i].rent;
+				cout << setw(25) << room[i].roomNo << "\n";
+			}
+		}
+		cout << "\n\n";
+	}
+
 	void displayMenu()
 	{
 		cout << "\n\n-----------------------------------------------Menu-------------------------------------------------\n\n ";
@@ -434,14 +497,31 @@ public:
 		}
 	}
 
-
+	//extra
+	void askFeedback()
+	{
+		int f;
+		string cname;
+		ofstream feedback;
+		feedback.open("feedback.txt", ios::app);
+		feedback << "Customer Name\t : ";
+		cout << "Enter your Name\n";
+		cin >> cname;
+		feedback << cname << "\t\t\t";
+		cout << " Thanks for your time! \n How likely are you to recommend Hotel Rennaisance to a Friend or Colleague? \n Rate on a scale of 1-10\n";
+		cin >> f;
+		feedback << "Feedback\t: ";
+		feedback << f << "\n";
+		feedback.close();
+		cout << " Thanks for your valuable feedback!" << endl;
+	}
+	//extra
 	void getCustomerData(Customer* c)
 	{
 		cout << " Name :: " << c->custName << endl;
 		cout << " Address :: " << c->custAddress << endl;
 		cout << " Phone :: " << c->custPhone << endl;
-		cout << " Email :: " << c->custEmail << endl;
-		cout << " Check-In Time:: " << c->checkInTime << endl;
+		
 	}
 
 	void vacateRoom(int rno)
@@ -475,7 +555,36 @@ public:
 		if (j == 0)
 			throw Exception(9, "Sorry! Dish Not Found, Enter a valid entry");
 	}
+
+	void show_bill()
+	{
+		bill.print_bill();
+	}
+	void add_dish()
+	{
+		restuarant.addDishes();
+	}
+
+	void remove_rooms()
+	{
+
+	}
+
+	void add_employees()
+	{
+
+	}
+
+	void remove_employees()
+	{
+
+	}
+	void employee_login()
+	{
+
+	}
 };
+Hotel* Hotel::instanceHotel = 0;
 
 
 
