@@ -797,7 +797,7 @@ public:
 				fptr = fopen("Signin_details.txt", "w+");
 				printf("\t\t\tUsername: ");
 				fflush(stdin);
-				gets(user);
+				fgets(user,30,stdin);
 				printf("\t\t\tPassword: ");
 				fflush(stdin);
 				//taking password in sterics
@@ -839,7 +839,7 @@ public:
 			else {
 				printf("\n\t\t\tUsername: ");
 				fflush(stdin);//refresh
-				gets(sign_name);
+				fgets(sign_name,30,stdin);
 				printf("\n\t\t\tPassword: ");
 				fflush(stdin);
 
@@ -854,7 +854,7 @@ public:
 				}
 				sign_pass[a] = '\0';
 
-				int i = 0;
+				int i = 0, count=0;
 				rewind(fptr);
 				while (!feof(fptr)) {
 					fgets(array[i], sizeof(array[i]), fptr);
