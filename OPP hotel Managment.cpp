@@ -69,20 +69,22 @@ public:
 		this->status = 0;
 
 	}
-	void setRoom()
+	void setRoom(string roomT, int noOfBeds, double rent, int roomNo)
 	{
-		cout << "Enter Room Type, No of beds, Rent, RoomNo\n";
-		cin >> this->roomType;
-		cin >> this->noOfBeds;
-		cin >> this->rent;
-		cin >> this->roomNo;
+		
+		for (int i = 0; i < roomT.size(); i++) {
+			roomType[i] = roomT[i];
+
+
+		}
+		this->noOfBeds = noOfBeds;
+		this->rent = rent;
+		this->roomNo = roomNo;
+		this->status = 0;
 		status = 0;
 
 	}
 
-	Room()
-	{
-	}
 
 
 
@@ -158,6 +160,16 @@ public:
 
 public:
 	Dish(string dishName, double price, string dishType)
+	{
+		for (int i = 0; i < dishName.size(); i++) {
+			this->dishName[i] = dishName[i];
+		}
+		this->price = price;
+		for (int i = 0; i < dishType.size(); i++) {
+			this->dishType[i] = dishType[i];
+		}
+	}
+	void set_dish(string dishName, double price, string dishType)
 	{
 		for (int i = 0; i < dishName.size(); i++) {
 			this->dishName[i] = dishName[i];
@@ -824,11 +836,13 @@ private:
 	string hotelName;
 	string hotelAddress;
 public:
+	Dish d1, d2, d3, d4, d5, d6;
+
 	vector <Employee>emp;
 	Restaurant restuarant;
 	Administrator admin;
 	RoomCustomer roomcus;
-
+	vector<Dish>dishes;
 	vector<Room>room;
 	Room r2;
 	vector<Customer>customer;
@@ -856,14 +870,30 @@ public:
 
 	void setHotel(Restaurant r, Room rs[6])
 	{
-		int i;
+		
 
-		for (i = 0; i < 6; i++)
-		{
-			this->room[i] = rs[i];
-		}
-		for (i = 0; i < 8; i++)
-			this->restuarant.dish[i] = r.dish[i];
+		
+			this->room[0].setRoom("Deluxe", 2, 3500, 1);
+			this->room[0].setRoom("AC", 1, 5500, 2);
+			this->room[0].setRoom("Non AC", 2, 2500, 3);
+			this->room[0].setRoom("AC", 2, 3500, 4);
+			this->room[0].setRoom("Deluxe", 2, 3500, 5);
+			this->room[0].setRoom("Deluxe", 3, 4500, 6);
+			
+			d1.set_dish("Chocolate Fondue", 140, "Desert");
+			d2.set_dish("Manchow_Soup", 110, "Soup");
+			d3.set_dish("Shahi_Paneer", 220, "Main Course");
+			d4.set_dish("Arizona_Tea", 100, "Beverage");
+			d5.set_dish("Grilled_Romaine Salad", 180, "Salad");
+			d6.set_dish("Mushroom_Manchurian", 170, "Starter");
+
+			dishes.push_back(d1);
+			dishes.push_back(d2);
+			dishes.push_back(d3);
+			dishes.push_back(d4);
+			dishes.push_back(d5);
+			dishes.push_back(d6);
+		
 
 	}
 	void room_service()
@@ -917,10 +947,13 @@ public:
 	void bookRoom(int r)
 	{
 		int i;
+		cout << "all availabe Rooms:\n";
+		r2.displayAvailable();
 		for (i = 0; i < 6; i++)
 		{
 			if (room[i].roomNo == r)
 				room[i].status = 1;
+			roomcus.bookRoom(r2);
 		}
 	}
 
