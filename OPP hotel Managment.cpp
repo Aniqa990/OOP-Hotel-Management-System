@@ -824,13 +824,14 @@ private:
 	string hotelName;
 	string hotelAddress;
 public:
-	Employee* employee[5];
+	vector <Employee>emp;
 	Restaurant restuarant;
 	Administrator admin;
 	RoomCustomer roomcus;
 
-	Room room[6], r2;
-	Customer* customer[5];
+	vector<Room>room;
+	Room r2;
+	vector<Customer>customer;
 	Bill bill;
 
 
